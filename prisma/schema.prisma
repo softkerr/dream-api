@@ -1,0 +1,674 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ServerStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+}
+
+enum AnalyticsEventType {
+  TRAFFIC
+  USAGE
+  BILLING
+  ERROR
+  CUSTOM
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  name      String?
+  role      Role     @default(USER)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  refreshTokens    RefreshToken[]
+  settings         UserSettings?
+  billingInvoices  BillingInvoice[]
+  supportTickets   SupportTicket[]   @relation("UserTickets")
+  assignedTickets  SupportTicket[]   @relation("AssignedTickets")
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model UserSettings {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  theme            String   @default("light")
+  notifications    Boolean  @default(true)
+  language         String   @default("en")
+  timezone         String   @default("UTC")
+  emailNotifications Boolean @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+model Domain {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  registrar   String?
+  expiresAt   DateTime?
+  autoRenew   Boolean   @default(false)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  websites         Website[]
+  settings         DomainSettings?
+  dnsRecords       DnsRecord[]
+  sslCertificates  SslCertificate[]
+  emailAccounts    EmailAccount[]
+
+  @@map("domains")
+}
+
+model DomainSettings {
+  id        String   @id @default(uuid())
+  domainId  String   @unique
+  dnsProvider String?
+  nameservers String[]
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@map("domain_settings")
+}
+
+model Server {
+  id         String       @id @default(uuid())
+  name       String
+  ipAddress  String       @unique
+  location   String?
+  provider   String?
+  status     ServerStatus @default(ACTIVE)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  // Relations
+  vps              VPS[]
+  dedicatedServers DedicatedServer[]
+  websites         Website[]
+  metrics          Metrics[]
+  analytics        Analytics[]
+  settings         ServerSettings?
+  databases        Database[]
+  ftpAccounts      FtpAccount[]
+  cronJobs         CronJob[]
+  firewallRules    FirewallRule[]
+  backups          Backup[]
+
+  @@map("servers")
+}
+
+model ServerSettings {
+  id          String   @id @default(uuid())
+  serverId    String   @unique
+  cpuCores    Int?
+  ramGB       Int?
+  storageGB   Int?
+  bandwidth   String?
+  os          String?
+  customSettings Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@map("server_settings")
+}
+
+model VPS {
+  id          String       @id @default(uuid())
+  name        String
+  serverId    String
+  planName    String?
+  vcpus       Int?
+  ramGB       Int?
+  storageGB   Int?
+  status      ServerStatus @default(ACTIVE)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  server   Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  metrics  Metrics[]
+  analytics Analytics[]
+  settings VPSSettings?
+
+  @@index([serverId])
+  @@map("vps")
+}
+
+model VPSSettings {
+  id         String   @id @default(uuid())
+  vpsId      String   @unique
+  sshPort    Int      @default(22)
+  firewallRules Json?
+  backupEnabled Boolean @default(false)
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  vps VPS @relation(fields: [vpsId], references: [id], onDelete: Cascade)
+
+  @@map("vps_settings")
+}
+
+model DedicatedServer {
+  id           String       @id @default(uuid())
+  name         String
+  serverId     String
+  cpuModel     String?
+  cpuCores     Int?
+  ramGB        Int?
+  storageType  String?
+  storageGB    Int?
+  status       ServerStatus @default(ACTIVE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  server    Server                  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  metrics   Metrics[]
+  analytics Analytics[]
+  settings  DedicatedServerSettings?
+
+  @@index([serverId])
+  @@map("dedicated_servers")
+}
+
+model DedicatedServerSettings {
+  id                String   @id @default(uuid())
+  dedicatedServerId String   @unique
+  raidConfiguration String?
+  ipmiAccess        Boolean  @default(false)
+  managedService    Boolean  @default(false)
+  metadata          Json?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  dedicatedServer DedicatedServer @relation(fields: [dedicatedServerId], references: [id], onDelete: Cascade)
+
+  @@map("dedicated_server_settings")
+}
+
+model Website {
+  id          String   @id @default(uuid())
+  name        String
+  url         String   @unique
+  domainId    String?
+  serverId    String?
+  isActive    Boolean  @default(true)
+  sslEnabled  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  domain    Domain?          @relation(fields: [domainId], references: [id], onDelete: SetNull)
+  server    Server?          @relation(fields: [serverId], references: [id], onDelete: SetNull)
+  metrics   Metrics[]
+  analytics Analytics[]
+  settings  WebsiteSettings?
+  backups   Backup[]
+
+  @@index([domainId])
+  @@index([serverId])
+  @@map("websites")
+}
+
+model WebsiteSettings {
+  id             String   @id @default(uuid())
+  websiteId      String   @unique
+  framework      String?
+  phpVersion     String?
+  nodeVersion    String?
+  deploymentType String?
+  customSettings Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  website Website @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@map("website_settings")
+}
+
+model Metrics {
+  id                String   @id @default(uuid())
+  serverId          String?
+  vpsId             String?
+  dedicatedServerId String?
+  websiteId         String?
+  requestCount      Int      @default(0)
+  cpuUsage          Float?
+  memoryUsage       Float?
+  diskUsage         Float?
+  uptime            Int?     // in seconds
+  timestamp         DateTime @default(now())
+  createdAt         DateTime @default(now())
+
+  // Relations
+  server          Server?          @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  vps             VPS?             @relation(fields: [vpsId], references: [id], onDelete: Cascade)
+  dedicatedServer DedicatedServer? @relation(fields: [dedicatedServerId], references: [id], onDelete: Cascade)
+  website         Website?         @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@index([serverId])
+  @@index([vpsId])
+  @@index([dedicatedServerId])
+  @@index([websiteId])
+  @@index([timestamp])
+  @@map("metrics")
+}
+
+model Analytics {
+  id                String              @id @default(uuid())
+  serverId          String?
+  vpsId             String?
+  dedicatedServerId String?
+  websiteId         String?
+  eventType         AnalyticsEventType
+  eventName         String
+  eventData         Json?
+  trafficVolume     Float?
+  usageAmount       Float?
+  billingAmount     Float?
+  currency          String?
+  timestamp         DateTime            @default(now())
+  createdAt         DateTime            @default(now())
+
+  // Relations
+  server          Server?          @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  vps             VPS?             @relation(fields: [vpsId], references: [id], onDelete: Cascade)
+  dedicatedServer DedicatedServer? @relation(fields: [dedicatedServerId], references: [id], onDelete: Cascade)
+  website         Website?         @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@index([serverId])
+  @@index([vpsId])
+  @@index([dedicatedServerId])
+  @@index([websiteId])
+  @@index([eventType])
+  @@index([timestamp])
+  @@map("analytics")
+}
+
+model GlobalSettings {
+  id           String   @id @default(uuid())
+  key          String   @unique
+  value        Json
+  description  String?
+  isPublic     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("global_settings")
+}
+
+// ========================================
+// NEW HOSTING-RELATED MODELS
+// ========================================
+
+enum DnsRecordType {
+  A
+  AAAA
+  CNAME
+  MX
+  TXT
+  NS
+  SRV
+  CAA
+  PTR
+}
+
+model DnsRecord {
+  id        Int            @id @default(autoincrement())
+  domainId  String
+  type      DnsRecordType
+  name      String
+  value     String
+  ttl       Int            @default(3600)
+  priority  Int?
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
+  @@index([type])
+  @@map("dns_records")
+}
+
+enum CertificateType {
+  SSL
+  TLS
+  WILDCARD
+  EV
+  DV
+  OV
+}
+
+enum CertificateProvider {
+  LETS_ENCRYPT
+  COMODO
+  DIGICERT
+  GODADDY
+  SECTIGO
+  CUSTOM
+}
+
+model SslCertificate {
+  id               Int                 @id @default(autoincrement())
+  domainId         String
+  type             CertificateType
+  provider         CertificateProvider
+  issuer           String
+  issueDate        DateTime
+  expirationDate   DateTime
+  autoRenew        Boolean             @default(true)
+  certificateChain String?             @db.Text
+  privateKey       String?             @db.Text
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
+  @@index([expirationDate])
+  @@map("ssl_certificates")
+}
+
+enum BackupType {
+  FULL
+  INCREMENTAL
+  DIFFERENTIAL
+}
+
+enum BackupStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum BackupFrequency {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+model Backup {
+  id             Int             @id @default(autoincrement())
+  serverId       String?
+  websiteId      String?
+  databaseId     Int?
+  type           BackupType
+  frequency      BackupFrequency
+  status         BackupStatus    @default(PENDING)
+  storagePath    String
+  sizeBytes      Float
+  retentionDays  Int             @default(30)
+  nextBackupDate DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  server   Server?   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  website  Website?  @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+  database Database? @relation(fields: [databaseId], references: [id], onDelete: Cascade)
+
+  @@index([serverId])
+  @@index([websiteId])
+  @@index([databaseId])
+  @@index([status])
+  @@map("backups")
+}
+
+model EmailAccount {
+  id          Int      @id @default(autoincrement())
+  domainId    String
+  email       String   @unique
+  password    String
+  quotaMB     Float
+  usedMB      Float    @default(0)
+  mailboxPath String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
+  @@map("email_accounts")
+}
+
+enum DatabaseType {
+  MYSQL
+  POSTGRESQL
+  MONGODB
+  REDIS
+  MARIADB
+}
+
+model Database {
+  id         Int          @id @default(autoincrement())
+  serverId   String
+  name       String
+  type       DatabaseType
+  dbUser     String
+  dbPassword String
+  host       String       @default("localhost")
+  port       Int          @default(5432)
+  sizeMB     Float        @default(0)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  server  Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  backups Backup[]
+
+  @@unique([serverId, name])
+  @@index([serverId])
+  @@map("databases")
+}
+
+enum FtpProtocol {
+  FTP
+  SFTP
+  FTPS
+}
+
+model FtpAccount {
+  id            Int         @id @default(autoincrement())
+  serverId      String
+  username      String
+  password      String
+  homeDirectory String
+  protocol      FtpProtocol @default(SFTP)
+  quotaMB       Float?
+  canRead       Boolean     @default(true)
+  canWrite      Boolean     @default(true)
+  canDelete     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@unique([serverId, username])
+  @@index([serverId])
+  @@map("ftp_accounts")
+}
+
+model CronJob {
+  id          Int      @id @default(autoincrement())
+  serverId    String
+  name        String
+  schedule    String
+  command     String
+  isActive    Boolean  @default(true)
+  description String?
+  lastRun     DateTime?
+  nextRun     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@index([serverId])
+  @@index([isActive])
+  @@map("cron_jobs")
+}
+
+enum FirewallAction {
+  ALLOW
+  DENY
+}
+
+enum FirewallProtocol {
+  TCP
+  UDP
+  ICMP
+  ALL
+}
+
+model FirewallRule {
+  id          Int              @id @default(autoincrement())
+  serverId    String
+  name        String
+  ipAddress   String
+  protocol    FirewallProtocol
+  port        String?
+  action      FirewallAction
+  priority    Int              @default(100)
+  isActive    Boolean          @default(true)
+  description String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@index([serverId])
+  @@index([priority])
+  @@map("firewall_rules")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  PAYPAL
+  BANK_TRANSFER
+  CRYPTOCURRENCY
+  OTHER
+}
+
+model BillingInvoice {
+  id            Int            @id @default(autoincrement())
+  userId        String
+  invoiceNumber String         @unique
+  amount        Float
+  currency      String         @default("USD")
+  status        InvoiceStatus  @default(PENDING)
+  dueDate       DateTime
+  paidDate      DateTime?
+  paymentMethod PaymentMethod?
+  description   String?
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([dueDate])
+  @@map("billing_invoices")
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TicketCategory {
+  TECHNICAL
+  BILLING
+  GENERAL
+  FEATURE_REQUEST
+  BUG_REPORT
+}
+
+model SupportTicket {
+  id           Int            @id @default(autoincrement())
+  userId       String
+  assignedToId String?
+  subject      String
+  description  String         @db.Text
+  category     TicketCategory
+  priority     TicketPriority
+  status       TicketStatus   @default(OPEN)
+  response     String?        @db.Text
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  user       User  @relation("UserTickets", fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo User? @relation("AssignedTickets", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([assignedToId])
+  @@index([status])
+  @@index([priority])
+  @@map("support_tickets")
+}
