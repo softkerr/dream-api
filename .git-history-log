@@ -5,3 +5,4 @@
 # feat: add Prisma schema with User model - 2022-04-25T09:00:00
 # chore: setup NestJS modules - 2022-04-25T15:20:00
 # feat: add global exception filter - 2022-04-26T10:45:00
+# feat: implement logging interceptor - 2022-04-27T13:15:00
