@@ -6,3 +6,4 @@
 # chore: setup NestJS modules - 2022-04-25T15:20:00
 # feat: add global exception filter - 2022-04-26T10:45:00
 # feat: implement logging interceptor - 2022-04-27T13:15:00
+# feat: add authentication decorators - 2022-04-28T09:30:00
