@@ -10,3 +10,4 @@
 # chore: update dependencies - 2022-04-29T14:00:00
 # feat: create auth DTOs - 2022-05-02T10:00:00
 # feat: implement JWT strategy - 2022-05-03T11:20:00
+# feat: add JWT auth guards - 2022-05-04T14:30:00
