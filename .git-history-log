@@ -11,3 +11,4 @@
 # feat: create auth DTOs - 2022-05-02T10:00:00
 # feat: implement JWT strategy - 2022-05-03T11:20:00
 # feat: add JWT auth guards - 2022-05-04T14:30:00
+# feat: implement role-based guards - 2022-05-05T09:45:00
