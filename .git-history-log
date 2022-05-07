@@ -13,3 +13,4 @@
 # feat: add JWT auth guards - 2022-05-04T14:30:00
 # feat: implement role-based guards - 2022-05-05T09:45:00
 # feat: complete auth service - 2022-05-06T15:10:00
+# feat: add auth controller endpoints - 2022-05-07T10:30:00
