@@ -15,3 +15,4 @@
 # feat: complete auth service - 2022-05-06T15:10:00
 # feat: add auth controller endpoints - 2022-05-07T10:30:00
 # test: add auth service tests - 2022-05-09T13:00:00
+# fix: token validation edge cases - 2022-05-10T11:15:00
