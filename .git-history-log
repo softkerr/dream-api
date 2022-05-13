@@ -18,3 +18,4 @@
 # fix: token validation edge cases - 2022-05-10T11:15:00
 # docs: document authentication flow - 2022-05-11T16:20:00
 # feat: add refresh token logic - 2022-05-12T09:00:00
+# feat: implement user DTOs - 2022-05-13T14:45:00
