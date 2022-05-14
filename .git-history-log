@@ -19,3 +19,4 @@
 # docs: document authentication flow - 2022-05-11T16:20:00
 # feat: add refresh token logic - 2022-05-12T09:00:00
 # feat: implement user DTOs - 2022-05-13T14:45:00
+# feat: create user service with CRUD - 2022-05-14T10:00:00
