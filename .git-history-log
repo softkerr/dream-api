@@ -24,3 +24,4 @@
 # feat: complete user module setup - 2022-05-17T15:00:00
 # feat: add pagination DTO - 2022-05-18T09:20:00
 # refactor: improve error handling - 2022-05-19T13:40:00
+# test: add user service tests - 2022-05-20T10:50:00
