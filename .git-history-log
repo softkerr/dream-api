@@ -26,3 +26,4 @@
 # refactor: improve error handling - 2022-05-19T13:40:00
 # test: add user service tests - 2022-05-20T10:50:00
 # fix: validation in user DTOs - 2022-05-21T08:30:00
+# docs: update README with setup instructions - 2022-05-23T14:15:00
