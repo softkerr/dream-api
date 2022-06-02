@@ -32,3 +32,4 @@
 # docs: add API documentation structure - 2022-05-27T09:15:00
 # chore: configure CI/CD pipeline - 2022-05-28T10:00:00
 # feat: add domain model to schema - 2022-06-01T10:30:00
+# feat: create domain DTOs - 2022-06-02T14:00:00
