@@ -43,3 +43,4 @@
 # docs: document domain endpoints - 2022-06-14T10:20:00
 # chore: update Swagger documentation - 2022-06-15T16:00:00
 # feat: add domain transfer functionality - 2022-06-17T09:30:00
+# fix: handle domain edge cases - 2022-06-20T11:00:00
