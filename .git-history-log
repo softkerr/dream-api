@@ -45,3 +45,4 @@
 # feat: add domain transfer functionality - 2022-06-17T09:30:00
 # fix: handle domain edge cases - 2022-06-20T11:00:00
 # test: add domain integration tests - 2022-06-21T14:45:00
+# refactor: clean up domain service - 2022-06-23T10:15:00
