@@ -67,3 +67,4 @@
 # feat: add dedicated server controller - 2022-07-21T14:00:00
 # feat: complete dedicated server module - 2022-07-22T11:30:00
 # test: add server integration tests - 2022-07-25T10:00:00
+# fix: server status updates - 2022-07-26T14:45:00
