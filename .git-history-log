@@ -120,3 +120,4 @@
 # chore: quarterly cleanup - 2022-09-30T15:00:00
 # feat: add settings model - 2022-10-03T10:30:00
 # feat: create settings DTOs - 2022-10-04T14:15:00
+# feat: implement settings service - 2022-10-05T11:00:00
