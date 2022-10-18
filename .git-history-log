@@ -129,3 +129,4 @@
 # docs: document settings - 2022-10-13T11:15:00
 # chore: update Docker files - 2022-10-14T15:00:00
 # feat: improve Dockerfile - 2022-10-17T09:45:00
+# feat: add production Docker Compose - 2022-10-18T13:20:00
