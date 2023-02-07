@@ -206,3 +206,4 @@
 # feat: add role-based permissions - 2023-02-02T14:20:00
 # test: add auth tests - 2023-02-03T11:30:00
 # fix: auth edge cases - 2023-02-06T15:00:00
+# feat: improve security - 2023-02-07T09:45:00
