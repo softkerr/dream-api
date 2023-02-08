@@ -207,3 +207,4 @@
 # test: add auth tests - 2023-02-03T11:30:00
 # fix: auth edge cases - 2023-02-06T15:00:00
 # feat: improve security - 2023-02-07T09:45:00
+# docs: document auth flow - 2023-02-08T13:15:00
