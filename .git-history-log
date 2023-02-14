@@ -211,3 +211,4 @@
 # test: add integration tests - 2023-02-09T10:30:00
 # fix: token refresh logic - 2023-02-10T14:45:00
 # feat: add password policies - 2023-02-13T11:00:00
+# test: add security tests - 2023-02-14T15:20:00
