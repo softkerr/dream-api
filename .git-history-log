@@ -215,3 +215,4 @@
 # fix: password validation - 2023-02-15T09:30:00
 # refactor: improve auth service - 2023-02-16T13:00:00
 # docs: update security docs - 2023-02-17T10:45:00
+# feat: add rate limiting - 2023-02-20T14:15:00
