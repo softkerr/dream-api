@@ -217,3 +217,4 @@
 # docs: update security docs - 2023-02-17T10:45:00
 # feat: add rate limiting - 2023-02-20T14:15:00
 # test: add rate limit tests - 2023-02-21T11:20:00
+# fix: rate limiting edge cases - 2023-02-22T15:40:00
