@@ -231,3 +231,4 @@
 # fix: DNS validation - 2023-03-09T10:30:00
 # feat: add DNS record types - 2023-03-10T14:00:00
 # test: add DNS integration tests - 2023-03-13T11:20:00
+# fix: DNS type validation - 2023-03-14T15:45:00
