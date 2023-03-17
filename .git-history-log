@@ -234,3 +234,4 @@
 # fix: DNS type validation - 2023-03-14T15:45:00
 # refactor: optimize DNS queries - 2023-03-15T09:30:00
 # docs: document DNS endpoints - 2023-03-16T13:00:00
+# feat: add findByDomain method - 2023-03-17T10:45:00
