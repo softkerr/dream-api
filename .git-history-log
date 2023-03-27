@@ -240,3 +240,4 @@
 # fix: DNS duplicate validation - 2023-03-22T15:30:00
 # docs: add DNS examples - 2023-03-23T09:00:00
 # chore: update Swagger docs - 2023-03-24T13:40:00
+# fix: DNS propagation checks - 2023-03-27T10:20:00
