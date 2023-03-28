@@ -241,3 +241,4 @@
 # docs: add DNS examples - 2023-03-23T09:00:00
 # chore: update Swagger docs - 2023-03-24T13:40:00
 # fix: DNS propagation checks - 2023-03-27T10:20:00
+# test: add DNS performance tests - 2023-03-28T14:45:00
