@@ -254,3 +254,4 @@
 # fix: certificate validation - 2023-04-11T10:30:00
 # feat: add expiring certificates query - 2023-04-12T14:45:00
 # feat: add expired certificates query - 2023-04-13T11:15:00
+# test: add SSL integration tests - 2023-04-14T15:00:00
