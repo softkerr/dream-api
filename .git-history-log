@@ -281,3 +281,4 @@
 # feat: add incremental backups - 2023-05-19T14:20:00
 # feat: add backup scheduling - 2023-05-22T11:15:00
 # test: add scheduling tests - 2023-05-23T15:30:00
+# fix: scheduling edge cases - 2023-05-24T09:00:00
