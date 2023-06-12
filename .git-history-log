@@ -294,3 +294,4 @@
 # feat: complete email module - 2023-06-07T09:45:00
 # test: add email tests - 2023-06-08T13:15:00
 # fix: email validation - 2023-06-09T10:30:00
+# feat: add password hashing - 2023-06-12T14:45:00
