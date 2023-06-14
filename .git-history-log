@@ -296,3 +296,4 @@
 # fix: email validation - 2023-06-09T10:30:00
 # feat: add password hashing - 2023-06-12T14:45:00
 # feat: add quota management - 2023-06-13T11:00:00
+# test: add email integration tests - 2023-06-14T15:20:00
