@@ -299,3 +299,4 @@
 # test: add email integration tests - 2023-06-14T15:20:00
 # fix: quota enforcement - 2023-06-15T09:30:00
 # feat: add database model - 2023-06-16T13:00:00
+# feat: create database DTOs - 2023-06-19T10:45:00
