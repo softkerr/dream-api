@@ -306,3 +306,4 @@
 # test: add database tests - 2023-06-23T09:00:00
 # fix: database validation - 2023-06-26T13:30:00
 # feat: add multi-DB support - 2023-06-27T10:30:00
+# docs: document email and database - 2023-06-28T14:00:00
