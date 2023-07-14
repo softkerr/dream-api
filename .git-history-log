@@ -319,3 +319,4 @@
 # feat: add SFTP support - 2023-07-11T10:30:00
 # feat: add FTPS support - 2023-07-12T14:00:00
 # test: add FTP integration tests - 2023-07-13T11:20:00
+# fix: permission inheritance - 2023-07-14T15:45:00
