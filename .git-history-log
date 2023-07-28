@@ -329,3 +329,4 @@
 # fix: cron expression validation - 2023-07-25T09:00:00
 # feat: add execution logs - 2023-07-26T13:40:00
 # docs: document FTP and cron - 2023-07-27T10:20:00
+# test: add integration tests - 2023-07-28T14:45:00
