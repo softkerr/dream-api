@@ -331,3 +331,4 @@
 # docs: document FTP and cron - 2023-07-27T10:20:00
 # test: add integration tests - 2023-07-28T14:45:00
 # chore: monthly review - 2023-07-31T11:30:00
+# feat: add firewall rule model - 2023-08-01T10:00:00
