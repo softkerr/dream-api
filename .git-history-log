@@ -341,3 +341,4 @@
 # feat: add priority sorting - 2023-08-10T14:45:00
 # feat: add IP validation - 2023-08-11T11:00:00
 # test: add firewall integration tests - 2023-08-14T15:20:00
+# fix: IP range validation - 2023-08-15T09:30:00
