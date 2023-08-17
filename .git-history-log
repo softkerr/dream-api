@@ -343,3 +343,4 @@
 # test: add firewall integration tests - 2023-08-14T15:20:00
 # fix: IP range validation - 2023-08-15T09:30:00
 # feat: add CIDR support - 2023-08-16T13:00:00
+# docs: document firewall rules - 2023-08-17T10:45:00
