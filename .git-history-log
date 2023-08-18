@@ -344,3 +344,4 @@
 # fix: IP range validation - 2023-08-15T09:30:00
 # feat: add CIDR support - 2023-08-16T13:00:00
 # docs: document firewall rules - 2023-08-17T10:45:00
+# feat: add rule templates - 2023-08-18T14:15:00
