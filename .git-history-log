@@ -365,3 +365,4 @@
 # feat: add overdue tracking - 2023-09-13T11:20:00
 # test: add billing integration tests - 2023-09-14T15:45:00
 # fix: currency handling - 2023-09-15T09:30:00
+# feat: add invoice generation - 2023-09-18T13:00:00
