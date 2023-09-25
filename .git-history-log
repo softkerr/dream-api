@@ -370,3 +370,4 @@
 # feat: add PDF generation - 2023-09-20T14:20:00
 # test: add PDF tests - 2023-09-21T11:15:00
 # fix: PDF formatting - 2023-09-22T15:30:00
+# refactor: improve billing logic - 2023-09-25T09:00:00
