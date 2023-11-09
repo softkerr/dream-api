@@ -403,3 +403,4 @@
 # fix: email quota validation - 2023-11-06T15:00:00
 # fix: database connection strings - 2023-11-07T09:45:00
 # fix: FTP permission defaults - 2023-11-08T13:15:00
+# fix: cron expression parsing - 2023-11-09T10:30:00
