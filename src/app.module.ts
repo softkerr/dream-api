@@ -42,7 +42,7 @@ import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
     MetricsModule,
     AnalyticsModule,
     SettingsModule,
-    // New hosting-related modules
+
     DnsRecordModule,
     SslCertificateModule,
     BackupModule,

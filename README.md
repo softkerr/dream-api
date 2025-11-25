@@ -481,7 +481,6 @@ dream-api/
 ## 🏗️ Architecture
 
 This project follows **Clean Architecture** principles:
-
 - **Controllers**: Handle HTTP requests and responses
 - **Services**: Business logic layer
 - **DTOs**: Data Transfer Objects for validation

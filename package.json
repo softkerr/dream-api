@@ -1,6 +1,6 @@
 {
   "name": "dream-api",
-  "version": "1.0.0",
+  "version": "14.0.10",
   "description": "Production-ready NestJS API with Clean Architecture, PostgreSQL, and Prisma",
   "author": "",
   "private": true,

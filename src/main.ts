@@ -9,7 +9,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  // Security
   app.use(helmet());
 
   // CORS
@@ -34,7 +33,7 @@ async function bootstrap() {
     }),
   );
 
-  // Swagger documentation
+
   const config = new DocumentBuilder()
     .setTitle('Dream API')
     .setDescription('Production-ready NestJS API with Clean Architecture')

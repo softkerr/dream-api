@@ -1,6 +1,5 @@
 # Development stage
 FROM node:18-alpine AS development
-
 WORKDIR /app
 
 # Copy package files
